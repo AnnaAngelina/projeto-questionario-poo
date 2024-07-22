@@ -1,3 +1,4 @@
+print()
 questoes = [['Qual ano foi proclamado a independência do brasil?\n', '1834', '1900', '1822', 'c'], ['Normalmente, quantos litros de sangue uma pessoa tem?\n', '4 a 6 litros', '2 a 4 litros', '7 litros', 'a'], ['Qual o livro mais vendido no mundo a seguir à Bíblia?', 'O senhor dos Aneis', 'Dom Quixote', 'O pequeno príncipe', 'b'], ['Quantas casas decimais tem o número pi?', 'Duas', 'Centenas', 'Infinitas', 'c']]
 pontos = 0
 nome = input('Olá, vamos começar!\nQual seu nome? ')
