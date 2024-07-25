@@ -7,37 +7,42 @@ curiosidades = ['Os dinossauros costumam ser nomeados de acordo com a sua aparê
 pontos = 0
 qa = 0
 qc = 0
+quest = 0 #variavel para imprimir a questão em ordem
 jaforam_perguntas = []
 jaforam_curiosidades = []
 nome = input('Olá, vamos começar!\nQual seu nome? ')
-for i in range(len(questoes)):
-    print(f'Questão {i+1}:')
-    qa = random.randint(0, len(questoes)-1)
+
+while len(jaforam_perguntas) < len(questoes):
+    print(len(jaforam_perguntas), len(questoes))
     qc = random.randint(0, len(curiosidades)-1)
-    if qa not in jaforam_perguntas and qc not in jaforam_curiosidades:
+    qa = random.randint(0, len(questoes)-1)
+
+    if qa not in jaforam_perguntas:
+        quest +=1
+        print(f'Questão {quest}:')
         resposta = input(f'{questoes[qa][0]}\na){questoes[qa][1]}\nb){questoes[qa][2]}\nc){questoes[qa][3]}\nResposta: ')
         jaforam_perguntas.append(qa)
-        jaforam_curiosidades.append(qc)
-    for p in range(1, 5):
-        if resposta.upper() == questoes[qa][p].upper():
-            print(f'\nParabéns, {nome.title()} você acertou!\nVocê ganhou 1 ponto\n...')
-            pontos +=1
-            print(f'Você tem {pontos} pontos!')
-            time.sleep(3)
-            os.system('cls')
-        elif resposta.upper() == questoes[qa][4].upper() and p == 1:  
-            print(f'\nParabéns, {nome.title()} você acertou!\nVocê ganhou 1 ponto\n...')
-            pontos +=1
-            print(f'Você tem {pontos} pontos!')
-            time.sleep(3)
-            os.system('cls')  
-        elif resposta.upper() != questoes[qa][4].upper() and p == 1:
+        acertos = 0
+
+        for p in range(1, 5):
+            if resposta.upper() == questoes[qa][p].upper():
+                print(resposta, questoes[qa][p])
+                pontos +=1
+                print(f'\nParabéns, {nome.title()} você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...')
+                time.sleep(3)
+                os.system('cls')
+                acertos+=1
+
+        if acertos == 0:
+            print(resposta, questoes[qa][p])
             print(f'\nErrou, {nome.title()}:(\n...')
             time.sleep(3)
-            os.system('cls')
-            
-    if (i+1)%2 == 0:
-        print(f'Curiosidade: {curiosidades[qc]}\n')
-        time.sleep(10)
-        os.system('cls')
+            os.system('cls')   
+
+        if (quest)%2 == 0:
+            if qc not in jaforam_curiosidades:
+                jaforam_curiosidades.append(qc)   
+                print(f'Curiosidade: {curiosidades[qc]}\n')
+                time.sleep(10)
+                os.system('cls')
 print(f'\nFIM DE JOGO\nVocê foi bem, conseguiu {pontos} pontos' if pontos >= 3 else '\nVocê não foi bem. Boa sorte na próxima')
