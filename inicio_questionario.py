@@ -67,13 +67,19 @@ frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '    .               .                     .    ^    .']
                       ]
 
-#for para acessar a "imagem":
-for id in range(len(frame_dinossauro)):
-    #for para imprimir cada linha da "imagem":
-    for ifd in range(len(frame_dinossauro[id])):
-        print(frame_dinossauro[id][ifd])
-    time.sleep(0.1)
-    os.system('cls')
+print('{:^88}'.format('.::::::.  :::   :: ::: :::::::'))
+print('{:^88}'.format(':::   ::  :::   ::          .\''))
+print('{:^88}'.format(':::   ::  :::   :: :::   .:\'  '))
+print('{:^88}'.format('::: ..::  :::   :: ::: :\'     '))
+print('{:^88}'.format('\'::::::\': \'::::::\' ::: :::::::'))
+
+print('::::::.  ::: :::.   :: .:::::. .:::::: .::::::  .::::.  :::   :: ::::::. .:::::. .::::::')
+print(':::   ::     ::: .  :: :::  :: :::.    :::.    :::   :: :::   :: :::  :: :::  :: :::.   ')
+print(':::   :: ::: :::  . :: :::  :: ::::::. ::::::. :::::::: :::   :: :::..:\' :::  :: ::::::.')
+print(':::   :: ::: :::   .:: :::  ::  \'\'\':::  \'\'\'::: :::   :: :::   :: :::.    :::  ::  \'\'\':::')    
+print(':::...:\' ::: :::    :: \':::::\' ::::::\' ::::::\' :::   :: \'::::::\' ::: \'.  \':::::\' ::::::\'')  
+time.sleep(5)
+os.system('cls')
 
 questoes = [['Quais os dois possíveis eventos que ocasionaram a extinção dos dinossauros?', 'asteroide e o vulcanismo', 'contaminação atmosférica e asteroide', 'chuvas ácidas e o efeito estufa', 'a'], ['O que significa o nome do dinossauro Triceratops e do Micropaquicefalossauro, respectivamente?', 'Rei lagarto tirano e dinossauro dos braços curtos', 'Três garras e lagarto de cabeça pequena', 'Cabeça com três chifres e pequeno lagarto de cabeça grossa', 'c'], ['A extinção do Cretáceo-Paleógeno foi uma extinção em massa, ocorrida há mais ou menos 65,5 milhões de anos, que marca:', 'O fim do período Jurássico e o início do Cretáceo', 'O fim do período Cretáceo e o início do Paleógeno', 'O fim do período Jurássico e o início do Paleógeno', 'b'], ['Qual dinossauro era o rei do “pum”?', 'Tiranossauro Rex', 'Giganotosaurus', 'Saurópode', 'c'], ['Segundo estudos, quais aves são os parentes vivos mais próximos do Tiranossauro Rex?', 'Ema e Galinha', 'Galinha e Avestruz', 'Casuar e avestruz', 'b'], ['Sabemos que o T-rex é conhecido por seus braços curtos, mas existiu um dinossauro, em termos de proporção, que possuía braços ainda menores. Que dinossauro é esse?', 'Giganotossauro', 'Allosaurus', 'Carnotauro', 'c'], ['Segundo estudos, existiu um dinossauro que teria evoluído para conseguir cavar a terra em busca de água e comida. Que criatura é esta?', 'Anquilossauro', 'Stegosaurus', 'Triceratops', 'a'], ['Qual dinossauro os paleontólogos acreditavam que era uma das espécies mais inteligentes e ágeis entre todos os dinossauros?', 'Sauroposeidon', 'Troodonte', 'Pteranodontes', 'b'], ['Qual a era da escala do tempo geológico é conhecida como “era dos dinossauros”?', 'Paleozoico', 'Fanerozóico', 'Mesozóico', 'c'], ['Qual era o dinossauro que pesava cerca de duas toneladas, mas que seu cérebro apresentava apenas 80 gramas?', 'Giganotosaurus', 'Estegossauro', 'Alossauro', 'b'], ['Qual foi o primeiro dinossauro a mostrar evidências que alimentava seus filhotes enquanto ainda estavam no ninho?', 'Maiassauro', 'Majungassauro', 'Mussauro', 'a'], ['Qual o sítio paleontológico com a maior incidência de pegadas de dinossauro do MUNDO?', 'Floresta Fóssil de Gilboa (Estados Unidos- Nova York)', 'Vale dos Dinossauros (Brasil- Paraíba)', 'Formação La Colônia (Argentina- Província de Chubut)', 'b']]
 
@@ -87,7 +93,6 @@ jaforam_curiosidades = []
 nome = input('Olá, vamos começar!\nQual seu nome?\n>> ')
 
 while len(jaforam_perguntas) < len(questoes):
-    print(len(jaforam_perguntas), len(questoes))
     qc = random.randint(0, len(curiosidades)-1)
     qa = random.randint(0, len(questoes)-1)
 
@@ -100,7 +105,6 @@ while len(jaforam_perguntas) < len(questoes):
 
         for p in range(1, 5):
             if resposta.upper() == questoes[qa][p].upper():
-                print(resposta, questoes[qa][p])
                 pontos +=1
                 print(f'\nParabéns, {nome.title()} você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...')
                 time.sleep(3)
@@ -115,12 +119,14 @@ while len(jaforam_perguntas) < len(questoes):
 
         if (quest)%2 == 0:
             if qc not in jaforam_curiosidades:
-                jaforam_curiosidades.append(qc)       
+                jaforam_curiosidades.append(qc)
+                #for para acessar a "imagem":
                 for indice_d in range(len(frame_dinossauro)):
+                    #for para imprimir cada linha da "imagem":
                     for indice_fd in range(len(frame_dinossauro[indice_d])):
                         print(frame_dinossauro[indice_d][indice_fd])
-                    print(f'\033[3;31mVocê sabia?:\n\033[m {curiosidades[qc]}\n')
-                    time.sleep(1.5)
+                    print(f'\033[3;49;93mVocê sabia?:\n\033[m {curiosidades[qc]}\n')
+                    time.sleep(1.8)
                     os.system('cls')
         
         else:
