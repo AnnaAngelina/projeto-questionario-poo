@@ -157,32 +157,15 @@ while loop:
             jaforam_perguntas.append(qa)
                 
             #Verificando se a resposta está correta:
-                # Se a) for a alternativa certa:
-            if 'a' == questoes[qa][4]:
-                if resposta.upper() == questoes[qa][1].upper() or resposta.lower() == 'a':
-                    pontos +=1
-                    print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
-                    time.sleep(3)
-                    os.system('cls')
-                    acertos+=1
-
-                # Se b) for a alternativa certa:
-            elif 'b' == questoes[qa][4]:
-                if resposta.upper() == questoes[qa][2].upper() or resposta.lower() == 'b':
-                    pontos +=1
-                    print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
-                    time.sleep(3)
-                    os.system('cls')
-                    acertos+=1
-                
-                # Se c) for a alternativa certa:
-            elif 'c' == questoes[qa][4]:
-                if resposta.upper() == questoes[qa][3].upper() or resposta.lower() == 'c':
-                    pontos +=1
-                    print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
-                    time.sleep(3)
-                    os.system('cls')
-                    acertos+=1
+            alt = ['a', 'b', 'c']
+            for i in range(3):
+                if alt[i] == questoes[qa][4]:
+                    if resposta.upper() == questoes[qa][i+1].upper() or resposta.lower() == alt[i]:
+                        pontos +=1
+                        print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
+                        time.sleep(3)
+                        os.system('cls')
+                        acertos+=1
 
             # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
             if acertos == 0:
