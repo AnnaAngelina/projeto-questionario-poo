@@ -147,7 +147,9 @@ while loop:
                 resposta = input(f'{questoes[qa][0]}\na){questoes[qa][1]}\nb){questoes[qa][2]}\nc){questoes[qa][3]}\nResposta: ')
                 alternativas.extend(['a', 'b', 'c', questoes[qa][1].lower(), questoes[qa][2].lower(), questoes[qa][3].lower()])
                 if resposta.lower() not in alternativas:
+                    os.system('cls')
                     print('\033[7;49;91m\nDigite uma resposta válida!\033[m')
+                    print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
                 else:
                     break
 
@@ -220,7 +222,8 @@ while loop:
 
     print(f'\n\nVocê foi bem, conseguiu {pontos} pontos' if pontos >= 6 else f'\nVocê não foi bem conseguiu {pontos} pontos. Boa sorte na próxima')
     print('\033[5;49;92m{}\033[m'.format(29*'-'))
-    continuar = input('Você deseja continuar a jogar?\n>>')
+    continuar = input('\nVocê deseja continuar a jogar?\n>> ')
+    # perguntando se o usuário deseja continuar a jogar, dependendo da resposta a variavel loop assumirá um valor para que o while se encerre
     if continuar.upper() != 'S' and continuar.upper() != 'SIM':
         loop = False
     else:
