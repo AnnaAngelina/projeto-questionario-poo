@@ -82,18 +82,18 @@ questoes = [['Quais os dois possíveis eventos que ocasionaram a extinção dos 
             ['Qual o sítio paleontológico com a maior incidência de pegadas de dinossauro do MUNDO?', 'Floresta Fóssil de Gilboa (Estados Unidos- Nova York)', 'Vale dos Dinossauros (Brasil- Paraíba)', 'Formação La Colônia (Argentina- Província de Chubut)', 'b']]
 
 #Vetor de curiosidades:
-curiosidades = ['Os dinossauros costumam ser nomeados de acordo com a sua aparência, comportamento ou outras características relevantes como sua localidade, mas muitas vezes eles recebem nomes que homenageiam o cientista que o descobriu', 
+curiosidades = ['Os dinossauros costumam ser nomeados de acordo com a sua aparência, comportamento ou outras características relevantes como sua localidade, mas muitas vezes eles recebem nomes que homenageiam o cientista que o descobriu.', 
                 'Acredita-se que o Saurópode, um tipo de dinossauro com corpo enorme e pescoço muito comprido, tinha um estômago tão grande e elaborado que funcionava como uma espécie de câmara de fermentação. Ou seja, por um lado as bactérias auxiliavam a processar toda sua enorme dieta fibrosa, mas por outro, resultava em uma grande proporção de pesadas flatulências, ou seja, o Saurópode era o rei dos grandes, sonoros e provavelmente nada cheirosos, puns!', 
-                'Você sabe por que o Tiranossauro Rex  e outros carnívoros tinham braços curtos? De acordo com estudos, as patas dianteiras dos grandes tiranossauros teriam sido reduzidas porque representavam um perigo para a sobrevivência de indivíduos suficientemente grandes já que durante a alimentação em grupo com outros predadores, as patas dianteiras ficavam vulneráveis a lesões que poderiam levar à morte. Além disso, seu grande crânio e suas mandíbulas forneceram todos os mecanismos predatórios necessários', 
-                'Os dinossauros, como aparecem nos filmes, não conseguiam colocar a língua para fora, como fazem os lagartos. Na maioria dos dinossauros os ossos da língua são muito pequenos e simples, conectados a uma língua sem muita mobilidade, assim como ocorre nos aligátores e crocodilos, sendo que, em alguns deles, a língua ficava presa à base da boca como o T-rex, por exemplo',
-                'Você sabia que existiu um dinossauro que engatinhava quando era jovem e passou a andar sobre as patas traseiras na idade adulta? O dinossauro Mussaurus à medida que ia crescendo ficava pesado o suficiente para permitir ao animal equilibrar-se sobre duas patas',
-                'O Tiranossauro Rex possuía cerca de 60 grandes e afiados dentes. Como eram carnívoros, usavam os dentes para cortar e rasgar a carne dos animais abatidos. Após caírem, os dentes dos tiranossauros nasciam novamente']
+                'Você sabe por que o Tiranossauro Rex  e outros carnívoros tinham braços curtos? De acordo com estudos, as patas dianteiras dos grandes tiranossauros teriam sido reduzidas porque representavam um perigo para a sobrevivência de indivíduos suficientemente grandes já que durante a alimentação em grupo com outros predadores, as patas dianteiras ficavam vulneráveis a lesões que poderiam levar à morte. Além disso, seu grande crânio e suas mandíbulas forneceram todos os mecanismos predatórios necessários.', 
+                'Os dinossauros, como aparecem nos filmes, não conseguiam colocar a língua para fora, como fazem os lagartos. Na maioria dos dinossauros os ossos da língua são muito pequenos e simples, conectados a uma língua sem muita mobilidade, assim como ocorre nos aligátores e crocodilos, sendo que, em alguns deles, a língua ficava presa à base da boca como o T-rex, por exemplo.',
+                'Você sabia que existiu um dinossauro que engatinhava quando era jovem e passou a andar sobre as patas traseiras na idade adulta? O dinossauro Mussaurus à medida que ia crescendo ficava pesado o suficiente para permitir ao animal equilibrar-se sobre duas patas.',
+                'O Tiranossauro Rex possuía cerca de 60 grandes e afiados dentes. Como eram carnívoros, usavam os dentes para cortar e rasgar a carne dos animais abatidos. Após caírem, os dentes dos tiranossauros nasciam novamente.']
 
 
 
 #90 é o código para a cor cinza, então a é a variável para a cor cinza no código de escape ANSI
 a = 90
-cores= [92,93,96] # 92= verde, 93= amarelo, 96= ciano.
+cores= [92,93,91] # 91= vermelho, 92= verde, 93= amarelo.
 b = random.choice(cores) #Sorteando um código de cor aleatório do vetor cores
 
 # for para imprimir interface degradê
@@ -112,7 +112,20 @@ for num in range(11):
     print('\033[1;{}m:::   ::     ::: .  :: :::  :: :::.    :::.    :::   :: :::   :: :::  :: :::  :: :::.   \033[m'.format(a if num<6 else b))
     print('\033[1;{}m:::   :: ::: :::  . :: :::  :: ::::::. ::::::. :::::::: :::   :: :::..:\' :::  :: ::::::.\033[m'.format(a if num<7 else b))
     print('\033[1;{}m:::   :: ::: :::   .:: :::  ::  \'\'\':::  \'\'\'::: :::   :: :::   :: :::.    :::  ::  \'\'\':::\033[m'.format(a if num<8 else b))    
-    print('\033[1;{}m:::...:\' ::: :::    :: \':::::\' ::::::\' ::::::\' :::   :: \'::::::\' ::: \'.  \':::::\' ::::::\'\033[m'.format(a if num<9 else b))  
+    print('\033[1;{}m:::...:\' ::: :::    :: \':::::\' ::::::\' ::::::\' :::   :: \'::::::\' ::: \'.  \':::::\' ::::::\'\033[m'.format(a if num<9 else b)) 
+
+
+    print('                                   _')
+    print('                                  /  \_') 
+    print('\033[94m                  /\ \033[97m           ( _____ )           \033[96m ________\033[m')
+    print('\033[94m                 /  \                              \033[96m \       _\______\033[m')
+    print('\033[94m     /\         /    \   /\                         \033[96m \ //  /       /\033[m')
+    print('\033[94m    /  \       /      \ /  \                       \033[96m /  /  /       /\033[m')
+    print('\033[94m   /    \     /        \    \         ~~          \033[96m / \' /\ /     .;\033[m')
+    print('\033[94m  /      \   /          \    .~~   ~    ~        \033[96m <//\ \^/     /¬\033[m')
+    print('\033[94m /        \./            \  ~    ~       ~        \033[96m    \____,(___>¬\033[m')
+    print('\033[94m/                         \~               ~')
+    print('\033[94m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
     #o time.sleep serve para que dê tempo observar a interface antes que seja apagada
     time.sleep(0.3)
@@ -136,8 +149,9 @@ while loop:
     while len(jaforam_perguntas) < len(questoes):
         qc = random.randint(0, len(curiosidades)-1)
         qa = random.randint(0, len(questoes)-1)
-
-        if qa not in jaforam_perguntas:
+        
+        #O if permite que nem as perguntas, nem as curiosidades sejam repetidas.
+        if qa not in jaforam_perguntas and qc not in jaforam_curiosidades:
             alternativas = []
             quest +=1
             print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
@@ -169,7 +183,7 @@ while loop:
 
             # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
             if acertos == 0:
-                print(f'\033[3;49;91m\nErrou, {nome.title()}:(. Boa sorte na próxima\n...\033[m')
+                print(f'\033[3;49;91m\nErrou, {nome.title()}:(. Boa sorte na próxima.\n...\033[m')
                 time.sleep(3)
                 os.system('cls')   
 
@@ -203,9 +217,14 @@ while loop:
     print('\033[1;93m:::      ::: :::      ::   :::   :: :::      ::. ::: :::  :: :::   :: :::  ::\033[m')
     print('\033[1;93m:::      ::: :::      ::   :::...:\' :::::::  \':::::\' \':::::\' \'::::::\' \':::::\'\033[m')
 
-    print(f'\n\nVocê foi bem, conseguiu {pontos} pontos' if pontos >= 6 else f'\nVocê não foi bem conseguiu {pontos} pontos. Boa sorte na próxima')
+    if pontos == len(questoes):
+        print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0}/{0} pontos. ( •̀ ω •́ )✧'.format(len(questoes)))
+    elif pontos >= 6:
+        print(f'\n\nVocê foi bem, conseguiu {pontos}/{len(questoes)} pontos.\nParabéns pelo esforço. :)')
+    else:
+        print(f'\n\nVocê não foi bem: conseguiu {pontos}/{len(questoes)} pontos. \nBoa sorte na próxima. :(')
     print('\033[5;49;92m{}\033[m'.format(29*'-'))
-    continuar = input('\nVocê deseja continuar a jogar?\n>> ')
+    continuar = input('\nVocê deseja jogar novamente?\n>> ')
     # perguntando se o usuário deseja continuar a jogar, dependendo da resposta a variavel loop assumirá um valor para que o while se encerre
     if continuar.upper() != 'S' and continuar.upper() != 'SIM':
         loop = False
