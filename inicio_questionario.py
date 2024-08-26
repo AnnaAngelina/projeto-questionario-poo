@@ -1,7 +1,9 @@
 import random 
 import os
 import time
-os.system('cls')
+
+def limpar():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 #As chaves e o .format servem para formatar a string de forma a deixar colorido apenas as partes que quero, que é o dinossauro.
 frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
@@ -129,8 +131,22 @@ for num in range(11):
 
     #o time.sleep serve para que dê tempo observar a interface antes que seja apagada
     time.sleep(0.3)
-    os.system('cls') # Além de servir para dar fim à "interface", faz com que ela não apareça um em baixo do outro, fazendo com que fique um efeito bacana.
+    limpar() # Além de servir para dar fim à "interface", faz com que ela não apareça um em baixo do outro, fazendo com que fique um efeito bacana.
 
+def exibir_quest(questoes, qa):
+    let = ['', 'a)', 'b)', 'c)']
+    for n in range(4):
+        print(f'{let[n]}{questoes[qa][n]}')
+
+def check_quest(alternativas, quest, resposta):
+    alternativas.extend(['a', 'b', 'c', questoes[qa][1].lower(), questoes[qa][2].lower(), questoes[qa][3].lower()])
+    if resposta.lower() not in alternativas:
+        limpar()
+        print('\033[7;49;91m\nDigite uma resposta válida!\033[m')
+        print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
+        return True
+    else:
+        return False
 
 loop = True
 while loop:
@@ -144,7 +160,7 @@ while loop:
 
     print('\033[5;49;92m{}\033[m'.format(18*'-'))
     nome = input('Olá, vamos começar!\nQual seu nome?\n>> ')
-    os.system('cls')
+    limpar()
 
     while len(jaforam_perguntas) < len(questoes):
         qc = random.randint(0, len(curiosidades)-1)
@@ -158,13 +174,9 @@ while loop:
 
             #Obtendo a resposta do usuário de forma que não entre uma resposta inválida:
             while True:
-                resposta = input(f'{questoes[qa][0]}\na){questoes[qa][1]}\nb){questoes[qa][2]}\nc){questoes[qa][3]}\nResposta: ')
-                alternativas.extend(['a', 'b', 'c', questoes[qa][1].lower(), questoes[qa][2].lower(), questoes[qa][3].lower()])
-                if resposta.lower() not in alternativas:
-                    os.system('cls')
-                    print('\033[7;49;91m\nDigite uma resposta válida!\033[m')
-                    print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
-                else:
+                exibir_quest(questoes, qa)
+                resposta = input('> ')
+                if check_quest(alternativas, quest, resposta) == False:
                     break
 
             acertos = 0
@@ -178,14 +190,14 @@ while loop:
                         pontos +=1
                         print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
                         time.sleep(3)
-                        os.system('cls')
+                        limpar()
                         acertos+=1
 
             # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
             if acertos == 0:
                 print(f'\033[3;49;91m\nErrou, {nome.title()}:(. Boa sorte na próxima.\n...\033[m')
                 time.sleep(3)
-                os.system('cls')   
+                limpar()   
 
             # Imprimindo o "carregamento de dinossauro" e uma curiosidade a cada duas questões:
             if (quest)%2 == 0:
@@ -199,7 +211,7 @@ while loop:
                         #Imprimindo a curiosidade:
                         print(f'\033[3;49;93mVocê sabia?:\n\033[m {curiosidades[qc]}\n')
                         time.sleep(1.8)
-                        os.system('cls')
+                        limpar()
             
             # Imprimindo apenas o "carregamento de dinossauro":
             else:
@@ -207,7 +219,7 @@ while loop:
                     for indice_fd in range(len(frame_dinossauro[indice_d])):
                         print(frame_dinossauro[indice_d][indice_fd])
                     time.sleep(0.5)
-                    os.system('cls')
+                    limpar()
 
 
     #imprimindo "FIM DE JOGO"
@@ -229,4 +241,4 @@ while loop:
     if continuar.upper() != 'S' and continuar.upper() != 'SIM':
         loop = False
     else:
-        os.system('cls')
+        limpar()
