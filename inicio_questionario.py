@@ -1,12 +1,13 @@
 import random 
 import os
 import time
+
 def limpar():
     os.system('cls' if os.name=='nt' else 'clear')
 
 #As chaves e o .format servem para formatar a string de forma a deixar colorido apenas as partes que quero, que é o dinossauro.
-def imprimir_dinossauro(num_questao):
-    global jaforam_curiosidades, curiosidades, qc
+def imprimir_dinossauro(num_questao, qc):
+    global jaforam_curiosidades, curiosidades
     frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '               {}/ _){}'.format('\033[1;32m', '\033[m'),
                      '      {}_.----._/ /{}'.format('\033[1;32m', '\033[m'),
@@ -84,7 +85,6 @@ def imprimir_dinossauro(num_questao):
         limpar()
 
 def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana e tempo_resposta
-    print('Acertou = ', acertou)
     if acertou:
         if tempo_resposta < 4:
             win_pontos = 5
@@ -95,6 +95,7 @@ def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana
         pontos += win_pontos
         print('Você respondeu em {:.1f} segundos. Por isso ganhou {} ponto(s)'.format(tempo_resposta,win_pontos))
     else:
+        print('Você perdeu 2 pontos!')
         pontos -= 2
     return pontos
 
@@ -179,6 +180,7 @@ def check_quest(alternativas, quest, resposta, qa):
 
 loop = True
 def jogar(loop):
+    global jaforam_curiosidades
     if loop == False:
         return 'Obrigada por jogar'
     else:
@@ -204,15 +206,15 @@ def jogar(loop):
                 quest +=1
                 print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
 
-            #Obtendo a resposta do usuário de forma que não entre uma resposta inválida:
-            while True:
-                exibir_quest(questoes, qa)
-                inicio_resposta = time.time()
-                resposta = input('> ')
-                fim_resposta = time.time()
-                tempo_resposta = fim_resposta - inicio_resposta
-                if check_quest(alternativas, quest, resposta, qa) == False:
-                    break
+                #Obtendo a resposta do usuário de forma que não entre uma resposta inválida:
+                while True:
+                    exibir_quest(questoes, qa)
+                    inicio_resposta = time.time()
+                    resposta = input('> ')
+                    fim_resposta = time.time()
+                    tempo_resposta = fim_resposta - inicio_resposta
+                    if check_quest(alternativas, quest, resposta, qa) == False:
+                        break
 
                 acertos = 0
                 jaforam_perguntas.append(qa)
@@ -222,39 +224,22 @@ def jogar(loop):
                 for i in range(3):
                     if alt[i] == questoes[qa][4]:
                         if resposta.upper() == questoes[qa][i+1].upper() or resposta.lower() == alt[i]:
-                            pontos +=1
-                            print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
+                            print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!')
+                            pontos = pontuar(True, tempo_resposta, pontos)
+                            print(f'\nVocê tem {pontos} pontos\n...\033[m')
                             time.sleep(3)
                             limpar()
                             acertos+=1
 
                 # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
                 if acertos == 0:
-                    print(f'\033[3;49;91m\nErrou, {nome.title()}:(. Boa sorte na próxima.\n...\033[m')
+                    print(f'\033[3;49;91m\nErrou, {nome.title()}:(.')
+                    pontos = pontuar(False, tempo_resposta, pontos)
+                    print('Boa sorte na próxima.\n...\033[m')
                     time.sleep(3)
                     limpar()   
 
-            #Verificando se a resposta está correta:
-            alt = ['a', 'b', 'c']
-            for i in range(3):
-                if alt[i] == questoes[qa][4]:
-                    if resposta.upper() == questoes[qa][i+1].upper() or resposta.lower() == alt[i]:
-                        pontos +=1
-                        print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
-                        pontos = pontuar(True, tempo_resposta, pontos)
-                        time.sleep(3)
-                        limpar()
-                        acertos+=1
-            
-
-            # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
-            if acertos == 0:
-                print(f'\033[3;49;91m\nErrou, {nome.title()}:(. Boa sorte na próxima.\n...\033[m')
-                pontos = pontuar(False, tempo_resposta, pontos)
-                time.sleep(3)
-                limpar()   
-
-        imprimir_dinossauro(num_questao= quest)
+                imprimir_dinossauro(quest, qc)
 
 
     #imprimindo "FIM DE JOGO"
@@ -264,12 +249,12 @@ def jogar(loop):
         print('\033[1;93m:::      ::: :::      ::   :::   :: :::      ::. ::: :::  :: :::   :: :::  ::\033[m')
         print('\033[1;93m:::      ::: :::      ::   :::...:\' :::::::  \':::::\' \':::::\' \'::::::\' \':::::\'\033[m')
 
-        if pontos == len(questoes):
-            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0}/{0} pontos. ( •̀ ω •́ )✧'.format(len(questoes)))
+        if pontos == 60:
+            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos. ( •̀ ω •́ )✧'.format(len(questoes)))
         elif pontos >= 6:
-            print(f'\n\nVocê foi bem, conseguiu {pontos}/{len(questoes)} pontos.\nParabéns pelo esforço. :)')
+            print(f'\n\nVocê foi bem, conseguiu {pontos} pontos.\nParabéns pelo esforço. :)')
         else:
-            print(f'\n\nVocê não foi bem: conseguiu {pontos}/{len(questoes)} pontos. \nBoa sorte na próxima. :(')
+            print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos. \nBoa sorte na próxima. :(')
         print('\033[5;49;92m{}\033[m'.format(29*'-'))
         continuar = input('\nVocê deseja jogar novamente?\n>> ')
         # perguntando se o usuário deseja continuar a jogar, dependendo da resposta a variavel loop assumirá um valor para que o while se encerre
