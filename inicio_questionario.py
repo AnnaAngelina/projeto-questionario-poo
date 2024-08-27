@@ -1,10 +1,13 @@
 import random 
 import os
 import time
-os.system('cls')
+def limpar():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 #As chaves e o .format servem para formatar a string de forma a deixar colorido apenas as partes que quero, que é o dinossauro.
-frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
+def imprimir_dinossauro(num_questao):
+    global jaforam_curiosidades, curiosidades, qc
+    frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '               {}/ _){}'.format('\033[1;32m', '\033[m'),
                      '      {}_.----._/ /{}'.format('\033[1;32m', '\033[m'),
                      '____ {}/         /{}__________________________________________'.format('\033[1;32m', '\033[m'),
@@ -65,7 +68,35 @@ frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '.           .         .     ^      .         .          .',
                      '    .               .                     .    ^    .']
                       ]
+    #for para acessar a "imagem":
+    for indice_d in range(len(frame_dinossauro)):
+        #for para imprimir cada linha da imagem:
+        for indice_fd in range(len(frame_dinossauro[indice_d])):
+            print(frame_dinossauro[indice_d][indice_fd])
 
+        #Imprimindo a curiosidade:
+        if num_questao%2==0:
+            jaforam_curiosidades.append(qc)
+            print(f'\033[3;49;93mVocê sabia?:\n\033[m {curiosidades[qc]}\n')
+            time.sleep(1.8)
+        else:
+            time.sleep(0.5)
+        limpar()
+
+def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana e tempo_resposta
+    print('Acertou = ', acertou)
+    if acertou:
+        if tempo_resposta < 4:
+            win_pontos = 5
+        elif tempo_resposta < 7:
+            win_pontos = 3
+        else:
+            win_pontos = 1
+        pontos += win_pontos
+        print('Você respondeu em {:.1f} segundos. Por isso ganhou {} ponto(s)'.format(tempo_resposta,win_pontos))
+    else:
+        pontos -= 2
+    return pontos
 
 # Matriz de questões:
 questoes = [['Quais os dois possíveis eventos que ocasionaram a extinção dos dinossauros?', 'asteroide e o vulcanismo', 'contaminação atmosférica e asteroide', 'chuvas ácidas e o efeito estufa', 'a'], 
@@ -158,7 +189,11 @@ while loop:
 
             #Obtendo a resposta do usuário de forma que não entre uma resposta inválida:
             while True:
+                inicio_resposta = time.time()
                 resposta = input(f'{questoes[qa][0]}\na){questoes[qa][1]}\nb){questoes[qa][2]}\nc){questoes[qa][3]}\nResposta: ')
+                fim_resposta = time.time()
+                tempo_resposta = fim_resposta - inicio_resposta
+
                 alternativas.extend(['a', 'b', 'c', questoes[qa][1].lower(), questoes[qa][2].lower(), questoes[qa][3].lower()])
                 if resposta.lower() not in alternativas:
                     os.system('cls')
@@ -167,7 +202,7 @@ while loop:
                 else:
                     break
 
-            acertos = 0
+            acertos = False
             jaforam_perguntas.append(qa)
                 
             #Verificando se a resposta está correta:
@@ -177,37 +212,22 @@ while loop:
                     if resposta.upper() == questoes[qa][i+1].upper() or resposta.lower() == alt[i]:
                         pontos +=1
                         print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
+                        pontos = pontuar(True, tempo_resposta, pontos)
                         time.sleep(3)
                         os.system('cls')
-                        acertos+=1
+                        acertos = True
+            
 
             # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
-            if acertos == 0:
+            if not acertos:
                 print(f'\033[3;49;91m\nErrou, {nome.title()}:(. Boa sorte na próxima.\n...\033[m')
+                pontos = pontuar(False, tempo_resposta, pontos)
                 time.sleep(3)
                 os.system('cls')   
 
-            # Imprimindo o "carregamento de dinossauro" e uma curiosidade a cada duas questões:
-            if (quest)%2 == 0:
-                if qc not in jaforam_curiosidades:
-                    jaforam_curiosidades.append(qc)
-                    #for para acessar a "imagem":
-                    for indice_d in range(len(frame_dinossauro)):
-                        #for para imprimir cada linha da "imagem":
-                        for indice_fd in range(len(frame_dinossauro[indice_d])):
-                            print(frame_dinossauro[indice_d][indice_fd])
-                        #Imprimindo a curiosidade:
-                        print(f'\033[3;49;93mVocê sabia?:\n\033[m {curiosidades[qc]}\n')
-                        time.sleep(1.8)
-                        os.system('cls')
             
-            # Imprimindo apenas o "carregamento de dinossauro":
-            else:
-                for indice_d in range(len(frame_dinossauro)):
-                    for indice_fd in range(len(frame_dinossauro[indice_d])):
-                        print(frame_dinossauro[indice_d][indice_fd])
-                    time.sleep(0.5)
-                    os.system('cls')
+
+        imprimir_dinossauro(num_questao = quest)
 
 
     #imprimindo "FIM DE JOGO"
