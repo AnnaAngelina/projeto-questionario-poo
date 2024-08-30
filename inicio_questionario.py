@@ -97,6 +97,8 @@ def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana
     else:
         print('Você perdeu 2 pontos!')
         pontos -= 2
+        print('Boa sorte na próxima.')
+    print(f'Você tem {pontos} pontos\n...\033[m')
     return pontos
 
 # Matriz de questões:
@@ -179,8 +181,10 @@ def check_quest(alternativas, quest, resposta, qa):
         return False
 
 loop = True
+quest_certas = 0
+
 def jogar(loop):
-    global jaforam_curiosidades
+    global jaforam_curiosidades, quest_certas
     if loop == False:
         return 'Obrigada por jogar'
     else:
@@ -226,16 +230,15 @@ def jogar(loop):
                         if resposta.upper() == questoes[qa][i+1].upper() or resposta.lower() == alt[i]:
                             print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!')
                             pontos = pontuar(True, tempo_resposta, pontos)
-                            print(f'\nVocê tem {pontos} pontos\n...\033[m')
                             time.sleep(3)
                             limpar()
                             acertos+=1
+                            quest_certas +=1
 
                 # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
                 if acertos == 0:
                     print(f'\033[3;49;91m\nErrou, {nome.title()}:(.')
                     pontos = pontuar(False, tempo_resposta, pontos)
-                    print('Boa sorte na próxima.\n...\033[m')
                     time.sleep(3)
                     limpar()   
 
@@ -249,12 +252,12 @@ def jogar(loop):
         print('\033[1;93m:::      ::: :::      ::   :::   :: :::      ::. ::: :::  :: :::   :: :::  ::\033[m')
         print('\033[1;93m:::      ::: :::      ::   :::...:\' :::::::  \':::::\' \':::::\' \'::::::\' \':::::\'\033[m')
 
-        if pontos == 60:
-            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos. ( •̀ ω •́ )✧'.format(len(questoes)))
-        elif pontos >= 6:
-            print(f'\n\nVocê foi bem, conseguiu {pontos} pontos.\nParabéns pelo esforço. :)')
+        if quest_certas == len(questoes):
+            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos e acertou {1} de {2} questões. ( •̀ ω •́ )✧'.format(len(questoes), quest_certas, len(questoes)))
+        elif quest_certas >= 6:
+            print(f'\n\nVocê foi bem, conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}.\nParabéns pelo esforço. :)')
         else:
-            print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos. \nBoa sorte na próxima. :(')
+            print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}. \nBoa sorte na próxima. :(')
         print('\033[5;49;92m{}\033[m'.format(29*'-'))
         continuar = input('\nVocê deseja jogar novamente?\n>> ')
         # perguntando se o usuário deseja continuar a jogar, dependendo da resposta a variavel loop assumirá um valor para que o while se encerre
