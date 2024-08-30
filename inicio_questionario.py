@@ -85,9 +85,11 @@ def imprimir_dinossauro(num_questao, qc):
             time.sleep(0.5)
         limpar()
 
+
 #função criada para a verificação e manuseio do tempo do jogador ao responder a pergunta
-def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana e tempo_resposta
+def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana
     if acertou:
+        #verificará se o tempo da resposta foi menor que n segundos e pontuará de acordo.
         if tempo_resposta < 5:
             win_pontos = 5
         elif tempo_resposta <= 10:
@@ -96,12 +98,16 @@ def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana
             win_pontos = 1
         pontos += win_pontos
         print('Você respondeu em {:.1f} segundos. Por isso ganhou {} ponto(s)'.format(tempo_resposta,win_pontos))
+        
     else:
+        #serão subtraídos 2 pontos pelo erro.
         print('Você perdeu 2 pontos!')
         print('Boa sorte na próxima.')
         pontos -= 2
     print(f'Você tem {pontos} pontos\n...\033[m')
-    return pontos
+
+    return pontos #retornando o total de pontos do usuário
+
 
 #função criada para mostrar as questões
 def exibir_quest(questoes, qa):
@@ -109,8 +115,10 @@ def exibir_quest(questoes, qa):
     for n in range(4):
         print(f'{let[n]}{questoes[qa][n]}')
 
+
 #função criada para a verificação da alternativa caso o jogador digite um nome que não seja igual as alternativas possíveis
 def check_quest(alternativas, quest, resposta, qa, tempo_resposta):
+    #Se o tempo de resposta for menor que um segundo, a pergunta será impressa novamente.
     if tempo_resposta < 1:    
         limpar()
         print('\033[7;49;91m\nVocê digitou em um tempo muito curto!\033[m')
@@ -118,6 +126,7 @@ def check_quest(alternativas, quest, resposta, qa, tempo_resposta):
         return True
     
     alternativas.extend(['a', 'b', 'c', questoes[qa][1].lower(), questoes[qa][2].lower(), questoes[qa][3].lower()])
+    #Se a resposta não for uma das possíveis, a pergunta será impressa novamente.
     if resposta.lower() not in alternativas:
         limpar()
         print('\033[7;49;91m\nDigite uma resposta válida!\033[m')
@@ -126,6 +135,7 @@ def check_quest(alternativas, quest, resposta, qa, tempo_resposta):
     else:
         return False
     
+
 # Matriz de questões:
 questoes = [['Quais os dois possíveis eventos que ocasionaram a extinção dos dinossauros?', 'asteroide e o vulcanismo', 'contaminação atmosférica e asteroide', 'chuvas ácidas e o efeito estufa', 'a'], 
             ['O que significa o nome do dinossauro Triceratops e do Micropaquicefalossauro, respectivamente?', 'Rei lagarto tirano e dinossauro dos braços curtos', 'Três garras e lagarto de cabeça pequena', 'Cabeça com três chifres e pequeno lagarto de cabeça grossa', 'c'], 
@@ -190,6 +200,7 @@ for num in range(11):
     limpar() # Além de servir para dar fim à "interface", faz com que ela não apareça um em baixo do outro, fazendo com que fique um efeito bacana.
 
 loop = True
+#quest_certas é uma variável que contará a quantidade de acertos do jogador para, no final, podermos verificar se o jogador acertou todas.
 quest_certas = 0
 
 #função recursiva criada para substituir o while e garantir a repetição do jogo de acordo com a resposta do jogador que servirá de condição básica para estabelecer o fim ou a continuação do jogo.
@@ -227,9 +238,13 @@ def jogar(loop):
                     resposta = input('> ')
                     fim_resposta = time.time()
                     tempo_resposta = fim_resposta - inicio_resposta
+                    '''
+                    tempo_resposta é a subtração do fim_resposta (o momento em que o usuário clicou enter) com o inicio_resposta 
+                    (o momento em que o sistema começa a esperar a resposta do usuário), resultando no tempo que o usuário demorou a responder
+                    '''
                     if check_quest(alternativas, quest, resposta, qa, tempo_resposta) == False:
                         break
-                    #inicio_resposta vai pegar o tempo de inicio de exibição de resposta e vai subtrair, em tempo_resposta, com o fim_resposta que é o tempo que conta quando o jogador terminar de digitar sua resposta e clicar em enter.
+                    #O "while" continuará repetindo até check_quest() retornar False, o que significa que a resposta digitada é uma das possíveis.
 
                 acertos = 0
                 jaforam_perguntas.append(qa)
@@ -245,7 +260,7 @@ def jogar(loop):
                             limpar()
                             acertos+=1
                             quest_certas +=1
-                            #quest_certas é uma variável que contará a quantidade de acertos do jogador para, no final, podermos verificar se o jogador acertou todas.
+                            
                 # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
                 if acertos == 0:
                     print(f'\033[3;49;91m\nErrou, {nome.title()}:(.')
@@ -253,6 +268,7 @@ def jogar(loop):
                     time.sleep(3)
                     limpar()   
 
+                #imprimindo o "carregamento de dinossauro"
                 imprimir_dinossauro(quest, qc)
 
 
@@ -277,4 +293,5 @@ def jogar(loop):
         else:
             limpar()
         return jogar(loop)
+    
 print(jogar(loop))
