@@ -264,7 +264,7 @@ def jogar(loop):
         print('\033[1;93m:::      ::: :::      ::   :::...:\' :::::::  \':::::\' \':::::\' \'::::::\' \':::::\'\033[m')
 
         if quest_certas == len(questoes):
-            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos e acertou {1} de {2} questões. ( •̀ ω •́ )✧'.format(len(questoes), quest_certas, len(questoes)))
+            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos e acertou {1} de {2} questões. ( •̀ ω •́ )✧'.format(pontos, quest_certas, len(questoes)))
         elif quest_certas >= 6:
             print(f'\n\nVocê foi bem, conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}.\nParabéns pelo esforço. :)')
         else:
