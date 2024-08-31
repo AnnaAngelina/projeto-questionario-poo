@@ -126,6 +126,17 @@ def check_quest(alternativas, quest, resposta, qa, tempo_resposta):
     else:
         return False
     
+#Função criada para mostrar a pontuação
+def show_points(pontos, questoes):
+    if quest_certas == len(questoes):
+            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos e acertou {1} de {2} questões. ( •̀ ω •́ )✧'.format(pontos, quest_certas, len(questoes)))
+    elif quest_certas >= 6:
+        print(f'\n\nVocê foi bem, conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}.\nParabéns pelo esforço. :)')
+    else:
+        print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}. \nBoa sorte na próxima. :(')
+    print('\033[5;49;92m{}\033[m'.format(29*'-'))
+    
+
 # Matriz de questões:
 questoes = [['Quais os dois possíveis eventos que ocasionaram a extinção dos dinossauros?', 'asteroide e o vulcanismo', 'contaminação atmosférica e asteroide', 'chuvas ácidas e o efeito estufa', 'a'], 
             ['O que significa o nome do dinossauro Triceratops e do Micropaquicefalossauro, respectivamente?', 'Rei lagarto tirano e dinossauro dos braços curtos', 'Três garras e lagarto de cabeça pequena', 'Cabeça com três chifres e pequeno lagarto de cabeça grossa', 'c'], 
@@ -263,13 +274,7 @@ def jogar(loop):
         print('\033[1;93m:::      ::: :::      ::   :::   :: :::      ::. ::: :::  :: :::   :: :::  ::\033[m')
         print('\033[1;93m:::      ::: :::      ::   :::...:\' :::::::  \':::::\' \':::::\' \'::::::\' \':::::\'\033[m')
 
-        if quest_certas == len(questoes):
-            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos e acertou {1} de {2} questões. ( •̀ ω •́ )✧'.format(pontos, quest_certas, len(questoes)))
-        elif quest_certas >= 6:
-            print(f'\n\nVocê foi bem, conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}.\nParabéns pelo esforço. :)')
-        else:
-            print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}. \nBoa sorte na próxima. :(')
-        print('\033[5;49;92m{}\033[m'.format(29*'-'))
+        show_points(pontos, questoes, quest_certas)
         continuar = input('\nVocê deseja jogar novamente?\n>> ')
         # perguntando se o usuário deseja continuar a jogar, dependendo da resposta a variavel loop assumirá um valor para que o while se encerre
         if continuar.upper() != 'S' and continuar.upper() != 'SIM':
