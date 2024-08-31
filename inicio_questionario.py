@@ -87,26 +87,38 @@ def imprimir_dinossauro(num_questao, qc):
 
 
 #função criada para a verificação e manuseio do tempo do jogador ao responder a pergunta
-def pontuar(acertou, tempo_resposta, pontos): #acertou é uma variável booleana
-    if acertou:
-        #verificará se o tempo da resposta foi menor que n segundos e pontuará de acordo.
-        if tempo_resposta < 5:
-            win_pontos = 5
-        elif tempo_resposta <= 10:
-            win_pontos = 3
-        else:
-            win_pontos = 1
-        pontos += win_pontos
-        print('Você respondeu em {:.1f} segundos. Por isso ganhou {} ponto(s)'.format(tempo_resposta,win_pontos))
-        
-    else:
-        #serão subtraídos 2 pontos pelo erro.
-        print('Você perdeu 2 pontos!')
-        print('Boa sorte na próxima.')
-        pontos -= 2
-    print(f'Você tem {pontos} pontos\n...\033[m')
+def pontuar(resposta, tempo_resposta, pontos, questoes, num_quest_list, quest_certas): #acertou é uma variável booleana
+    global nome
+    acertou = False
 
-    return pontos #retornando o total de pontos do usuário
+    #Verificando se a resposta está correta:
+    alt = ['a', 'b', 'c']
+    for i in range(3): 
+        if alt[i] == questoes[num_quest_list][4]: 
+            if resposta.upper() == questoes[num_quest_list][i+1].upper() or resposta.lower() == alt[i]:
+                print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!')
+                acertou = True
+                quest_certas +=1
+
+                #verificará se o tempo da resposta foi menor que n segundos e pontuará de acordo.
+                if tempo_resposta < 5:
+                    win_pontos = 5
+                elif tempo_resposta <= 10:
+                    win_pontos = 3
+                else:
+                    win_pontos = 1
+                pontos += win_pontos
+                print('Você respondeu em {:.1f} segundos. Por isso ganhou {} ponto(s)'.format(tempo_resposta,win_pontos))
+
+    if not acertou:
+        #serão subtraídos 2 pontos pelo erro.
+        print(f'\033[3;49;91m\nErrou, {nome.title()}:(.\nVocê perdeu 2 pontos!\nBoa sorte na próxima.')
+        pontos -= 2
+    print(f'>>> Você tem {pontos} pontos\n...\033[m')
+    time.sleep(3)
+    limpar()  
+
+    return pontos, quest_certas #retornando o total de pontos do usuário e o total de questões que ele acertou
 
 
 #função criada para mostrar as questões
@@ -205,7 +217,7 @@ quest_certas = 0
 
 #função recursiva criada para substituir o while e garantir a repetição do jogo de acordo com a resposta do jogador que servirá de condição básica para estabelecer o fim ou a continuação do jogo.
 def jogar(loop):
-    global jaforam_curiosidades, quest_certas
+    global jaforam_curiosidades, quest_certas, nome
     if loop == False:
         return 'Obrigada por jogar'
     else:
@@ -248,25 +260,8 @@ def jogar(loop):
 
                 acertos = 0
                 jaforam_perguntas.append(qa)
-                    
-                #Verificando se a resposta está correta:
-                alt = ['a', 'b', 'c']
-                for i in range(3):
-                    if alt[i] == questoes[qa][4]:
-                        if resposta.upper() == questoes[qa][i+1].upper() or resposta.lower() == alt[i]:
-                            print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!')
-                            pontos = pontuar(True, tempo_resposta, pontos)
-                            time.sleep(3)
-                            limpar()
-                            acertos+=1
-                            quest_certas +=1
-                            
-                # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
-                if acertos == 0:
-                    print(f'\033[3;49;91m\nErrou, {nome.title()}:(.')
-                    pontos = pontuar(False, tempo_resposta, pontos)
-                    time.sleep(3)
-                    limpar()   
+
+                pontos, quest_certas = pontuar(resposta, tempo_resposta, pontos, questoes, qa, quest_certas)    
 
                 #imprimindo o "carregamento de dinossauro"
                 imprimir_dinossauro(quest, qc)
