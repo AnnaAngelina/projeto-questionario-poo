@@ -148,13 +148,13 @@ def check_quest(alternativas, quest, resposta, qa, tempo_resposta):
         return False
     
 #Função criada para mostrar a pontuação
-def show_points(pontos, questoes):
+def show_points(pontos, questoes, quest_certas):
     if quest_certas == len(questoes):
             print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos e acertou {1} de {2} questões. ( •̀ ω •́ )✧'.format(pontos, quest_certas, len(questoes)))
     elif quest_certas >= 6:
-        print(f'\n\nVocê foi bem, conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}.\nParabéns pelo esforço. :)')
+        print(f'\n\nVocê foi bem, conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)} questões.\nParabéns pelo esforço. :)')
     else:
-        print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)}. \nBoa sorte na próxima. :(')
+        print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)} questões. \nBoa sorte na próxima. :(')
     print('\033[5;49;92m{}\033[m'.format(29*'-'))
     
 
@@ -222,8 +222,6 @@ for num in range(11):
     limpar() # Além de servir para dar fim à "interface", faz com que ela não apareça um em baixo do outro, fazendo com que fique um efeito bacana.
 
 loop = True
-#quest_certas é uma variável que contará a quantidade de acertos do jogador para, no final, podermos verificar se o jogador acertou todas.
-quest_certas = 0
 
 #função recursiva criada para substituir o while e garantir a repetição do jogo de acordo com a resposta do jogador que servirá de condição básica para estabelecer o fim ou a continuação do jogo.
 def jogar(loop):
@@ -235,6 +233,7 @@ def jogar(loop):
         qa = 0 # Variável para escolher a questão 
         qc = 0 # Variável para escolher a curiosidade
         quest = 0 #variavel para imprimir a questão em ordem
+        quest_certas = 0  #quest_certas é uma variável que contará a quantidade de acertos do jogador para, no final, podermos verificar se o jogador acertou todas.
 
         jaforam_perguntas = [] # Lista para por as *questões* que já foram
         jaforam_curiosidades = [] # Lista para por as *curiosidades* que já foram
