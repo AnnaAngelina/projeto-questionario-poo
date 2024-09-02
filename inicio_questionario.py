@@ -87,7 +87,7 @@ def imprimir_dinossauro(num_questao, qc):
 
 
 #função criada para a verificação e manuseio do tempo do jogador ao responder a pergunta
-def pontuar(resposta, tempo_resposta, pontos, questoes, num_quest_list, quest_certas): #acertou é uma variável booleana
+def pontuar(resposta, tempo_resposta, pontos, questoes, num_quest_list, quest_certas): 
     global nome
     acertou = False
 
