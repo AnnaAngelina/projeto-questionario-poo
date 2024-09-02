@@ -1,15 +1,19 @@
 import random 
 import os
 import time
-os.system('cls')
+
+def limpar():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 #As chaves e o .format servem para formatar a string de forma a deixar colorido apenas as partes que quero, que é o dinossauro.
-frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
+def imprimir_dinossauro(num_questao, qc):
+    global jaforam_curiosidades, curiosidades
+    frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '               {}/ _){}'.format('\033[1;32m', '\033[m'),
                      '      {}_.----._/ /{}'.format('\033[1;32m', '\033[m'),
                      '____ {}/         /{}__________________________________________'.format('\033[1;32m', '\033[m'),
-                     '  {}__/ (  | (  \{}          .           .           .  '.format('\033[1;32m', '\033[m'), 
-                     ' {}/__.-\'|_|-- \_\{}  . ^          .         .            .'.format('\033[1;32m', '\033[m'),
+                     '  {}__/ (  | (  \\{}          .           .           .  '.format('\033[1;32m', '\033[m'), 
+                     ' {}/__.-\'|_|-- \\_\\{}  . ^          .         .            .'.format('\033[1;32m', '\033[m'),
                      '.           .         .     ^      .         .          .',
                      '    .               .                     .    ^    .'],
                      
@@ -26,8 +30,8 @@ frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '                   {}/ _){}'.format('\033[1;32m', '\033[m'),
                      '          {}_.----._/ /{}'.format('\033[1;32m', '\033[m'),
                      '________ {}/         /{}______________________________________'.format('\033[1;32m', '\033[m'),
-                     '    . {}__/ (  | (  \ {}     .           .           .  '.format('\033[1;32m', '\033[m'), 
-                     ' .   {}/__.-\'|_|-- \_\{} ^         .         .            .'.format('\033[1;32m', '\033[m'),
+                     '    . {}__/ (  | (  \\{}     .           .           .  '.format('\033[1;32m', '\033[m'), 
+                     ' .   {}/__.-\'|_|-- \\_\\{} ^         .         .            .'.format('\033[1;32m', '\033[m'),
                      '.           .         .     ^      .         .          .',
                      '    .               .                     .    ^    .'], 
 
@@ -43,8 +47,8 @@ frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '                        {}/ _){}'.format('\033[1;32m', '\033[m'),
                      '               {}_.----._/ /{}'.format('\033[1;32m', '\033[m'),
                      '_____________ {}/         /{}_________________________________'.format('\033[1;32m', '\033[m'),
-                     '    .  ^   {}__/ (  | (  \{}   .           .           .  '.format('\033[1;32m', '\033[m'), 
-                     ' .        {}/__.-\'|_|-- \_\{}      .         .            .'.format('\033[1;32m', '\033[m'),
+                     '    .  ^   {}__/ (  | (  \\{}   .           .           .  '.format('\033[1;32m', '\033[m'), 
+                     ' .        {}/__.-\'|_|-- \\_\\{}      .         .            .'.format('\033[1;32m', '\033[m'),
                      '.           .         .     ^      .         .          .',
                      '    .               .                     .    ^    .'],
 
@@ -60,12 +64,99 @@ frame_dinossauro = [['                {}__{}'.format('\033[1;32m', '\033[m'),
                      '                             {}/ _){}'.format('\033[1;32m', '\033[m'),
                      '                   {} _.----._/ /{}'.format('\033[1;32m', '\033[m'),
                      '__________________ {}/         /{}____________________________'.format('\033[1;32m', '\033[m'),
-                     '    .  ^     .  {}__/ (  | (  \{}          .           .  '.format('\033[1;32m', '\033[m'), 
-                     ' .      .      {}/__.-\'|_|-- \_\{} .         .            .'.format('\033[1;32m', '\033[m'),
+                     '    .  ^     .  {}__/ (  | (  \\{}          .           .  '.format('\033[1;32m', '\033[m'), 
+                     ' .      .      {}/__.-\'|_|-- \\_\\{} .         .            .'.format('\033[1;32m', '\033[m'),
                      '.           .         .     ^      .         .          .',
                      '    .               .                     .    ^    .']
                       ]
+    
+    #for para acessar a "imagem":
+    for indice_d in range(len(frame_dinossauro)):
+        #for para imprimir cada linha da imagem:
+        for indice_fd in range(len(frame_dinossauro[indice_d])):
+            print(frame_dinossauro[indice_d][indice_fd])
 
+        #Imprimindo a curiosidade:
+        if num_questao%2==0:
+            jaforam_curiosidades.append(qc)
+            print(f'\033[3;49;93mVocê sabia?:\n\033[m {curiosidades[qc]}\n')
+            time.sleep(1.8)
+        else:
+            time.sleep(0.5)
+        limpar()
+
+
+#função criada para a verificação e manuseio do tempo do jogador ao responder a pergunta
+def pontuar(resposta, tempo_resposta, pontos, questoes, num_quest_list, quest_certas): 
+    global nome
+    acertou = False
+
+    #Verificando se a resposta está correta:
+    alt = ['a', 'b', 'c']
+    for i in range(3): 
+        if alt[i] == questoes[num_quest_list][4]: 
+            if resposta.upper() == questoes[num_quest_list][i+1].upper() or resposta.lower() == alt[i]:
+                print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!')
+                acertou = True
+                quest_certas +=1
+
+                #verificará se o tempo da resposta foi menor que n segundos e pontuará de acordo.
+                if tempo_resposta < 5:
+                    win_pontos = 5
+                elif tempo_resposta <= 10:
+                    win_pontos = 3
+                else:
+                    win_pontos = 1
+                pontos += win_pontos
+                print('Você respondeu em {:.1f} segundos. Por isso ganhou {} ponto(s)'.format(tempo_resposta,win_pontos))
+
+    if not acertou:
+        #serão subtraídos 2 pontos pelo erro.
+        print(f'\033[3;49;91m\nErrou, {nome.title()}:(.\nVocê perdeu 2 pontos!\nBoa sorte na próxima.')
+        pontos -= 2
+    print(f'>>> Você tem {pontos} pontos\n...\033[m')
+    time.sleep(3)
+    limpar()  
+
+    return pontos, quest_certas #retornando o total de pontos do usuário e o total de questões que ele acertou
+
+
+#função criada para mostrar as questões
+def exibir_quest(questoes, qa):
+    let = ['', 'a)', 'b)', 'c)']
+    for n in range(4):
+        print(f'{let[n]}{questoes[qa][n]}')
+
+
+#função criada para a verificação da alternativa caso o jogador digite um nome que não seja igual as alternativas possíveis
+def check_quest(alternativas, quest, resposta, qa, tempo_resposta):
+    #Se o tempo de resposta for menor que um segundo, a pergunta será impressa novamente.
+    if tempo_resposta < 1:    
+        limpar()
+        print('\033[7;49;91m\nVocê digitou em um tempo muito curto!\033[m')
+        print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
+        return True
+    
+    alternativas.extend(['a', 'b', 'c', questoes[qa][1].lower(), questoes[qa][2].lower(), questoes[qa][3].lower()])
+    #Se a resposta não for uma das possíveis, a pergunta será impressa novamente.
+    if resposta.lower() not in alternativas:
+        limpar()
+        print('\033[7;49;91m\nDigite uma resposta válida!\033[m')
+        print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
+        return True
+    else:
+        return False
+    
+#Função criada para mostrar a pontuação
+def show_points(pontos, questoes, quest_certas):
+    if quest_certas == len(questoes):
+            print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0} pontos e acertou {1} de {2} questões. ( •̀ ω •́ )✧'.format(pontos, quest_certas, len(questoes)))
+    elif quest_certas >= 6:
+        print(f'\n\nVocê foi bem, conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)} questões.\nParabéns pelo esforço. :)')
+    else:
+        print(f'\n\nVocê não foi bem: conseguiu {pontos} pontos e acertou {quest_certas} de {len(questoes)} questões. \nBoa sorte na próxima. :(')
+    print('\033[5;49;92m{}\033[m'.format(29*'-'))
+    
 
 # Matriz de questões:
 questoes = [['Quais os dois possíveis eventos que ocasionaram a extinção dos dinossauros?', 'asteroide e o vulcanismo', 'contaminação atmosférica e asteroide', 'chuvas ácidas e o efeito estufa', 'a'], 
@@ -88,7 +179,6 @@ curiosidades = ['Os dinossauros costumam ser nomeados de acordo com a sua aparê
                 'Os dinossauros, como aparecem nos filmes, não conseguiam colocar a língua para fora, como fazem os lagartos. Na maioria dos dinossauros os ossos da língua são muito pequenos e simples, conectados a uma língua sem muita mobilidade, assim como ocorre nos aligátores e crocodilos, sendo que, em alguns deles, a língua ficava presa à base da boca como o T-rex, por exemplo.',
                 'Você sabia que existiu um dinossauro que engatinhava quando era jovem e passou a andar sobre as patas traseiras na idade adulta? O dinossauro Mussaurus à medida que ia crescendo ficava pesado o suficiente para permitir ao animal equilibrar-se sobre duas patas.',
                 'O Tiranossauro Rex possuía cerca de 60 grandes e afiados dentes. Como eram carnívoros, usavam os dentes para cortar e rasgar a carne dos animais abatidos. Após caírem, os dentes dos tiranossauros nasciam novamente.']
-
 
 
 #90 é o código para a cor cinza, então a é a variável para a cor cinza no código de escape ANSI
@@ -116,117 +206,89 @@ for num in range(11):
 
 
     print('                                   _')
-    print('                                  /  \_') 
-    print('\033[94m                  /\ \033[97m           ( _____ )           \033[96m ________\033[m')
-    print('\033[94m                 /  \                              \033[96m \       _\______\033[m')
-    print('\033[94m     /\         /    \   /\                         \033[96m \ //  /       /\033[m')
-    print('\033[94m    /  \       /      \ /  \                       \033[96m /  /  /       /\033[m')
-    print('\033[94m   /    \     /        \    \         ~~          \033[96m / \' /\ /     .;\033[m')
-    print('\033[94m  /      \   /          \    .~~   ~    ~        \033[96m <//\ \^/     /¬\033[m')
-    print('\033[94m /        \./            \  ~    ~       ~        \033[96m    \____,(___>¬\033[m')
-    print('\033[94m/                         \~               ~')
+    print('                                  /  \\_') 
+    print('\033[94m                  /\\ \033[97m           ( _____ )           \033[96m ________\033[m')
+    print('\033[94m                 /  \\                              \033[96m \\       _\\______\033[m')
+    print('\033[94m     /\\         /    \\   /\\                         \033[96m \\ //  /       /\033[m')
+    print('\033[94m    /  \\       /      \\ /  \\                       \033[96m /  /  /       /\033[m')
+    print('\033[94m   /    \\     /        \\    \\         ~~          \033[96m / \' /\\ /     .;\033[m')
+    print('\033[94m  /      \\   /          \\    .~~   ~    ~        \033[96m <//\\ \\^/     /¬\033[m')
+    print('\033[94m /        \\./            \\  ~    ~       ~        \033[96m    \\____,(___>¬\033[m')
+    print('\033[94m/                         \\~               ~')
     print('\033[94m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
     #o time.sleep serve para que dê tempo observar a interface antes que seja apagada
     time.sleep(0.3)
-    os.system('cls') # Além de servir para dar fim à "interface", faz com que ela não apareça um em baixo do outro, fazendo com que fique um efeito bacana.
-
+    limpar() # Além de servir para dar fim à "interface", faz com que ela não apareça um em baixo do outro, fazendo com que fique um efeito bacana.
 
 loop = True
-while loop:
-    pontos = 0
-    qa = 0 # Variável para escolher a questão 
-    qc = 0 # Variável para escolher a curiosidade
-    quest = 0 #variavel para imprimir a questão em ordem
 
-    jaforam_perguntas = [] # Lista para por as *questões* que já foram
-    jaforam_curiosidades = [] # Lista para por as *curiosidades* que já foram
+#função recursiva criada para substituir o while e garantir a repetição do jogo de acordo com a resposta do jogador que servirá de condição básica para estabelecer o fim ou a continuação do jogo.
+def jogar(loop):
+    global jaforam_curiosidades, quest_certas, nome
+    if loop == False:
+        return 'Obrigada por jogar'
+    else:
+        pontos = 0
+        qa = 0 # Variável para escolher a questão 
+        qc = 0 # Variável para escolher a curiosidade
+        quest = 0 #variavel para imprimir a questão em ordem
+        quest_certas = 0  #quest_certas é uma variável que contará a quantidade de acertos do jogador para, no final, podermos verificar se o jogador acertou todas.
 
-    print('\033[5;49;92m{}\033[m'.format(18*'-'))
-    nome = input('Olá, vamos começar!\nQual seu nome?\n>> ')
-    os.system('cls')
+        jaforam_perguntas = [] # Lista para por as *questões* que já foram
+        jaforam_curiosidades = [] # Lista para por as *curiosidades* que já foram
 
-    while len(jaforam_perguntas) < len(questoes):
-        qc = random.randint(0, len(curiosidades)-1)
-        qa = random.randint(0, len(questoes)-1)
-        
-        #O if permite que nem as perguntas, nem as curiosidades sejam repetidas.
-        if qa not in jaforam_perguntas and qc not in jaforam_curiosidades:
-            alternativas = []
-            quest +=1
-            print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
+        print('\033[5;49;92m{}\033[m'.format(18*'-'))
+        nome = input('Olá, vamos começar!\nQual seu nome?\n>> ')
+        limpar()
 
-            #Obtendo a resposta do usuário de forma que não entre uma resposta inválida:
-            while True:
-                resposta = input(f'{questoes[qa][0]}\na){questoes[qa][1]}\nb){questoes[qa][2]}\nc){questoes[qa][3]}\nResposta: ')
-                alternativas.extend(['a', 'b', 'c', questoes[qa][1].lower(), questoes[qa][2].lower(), questoes[qa][3].lower()])
-                if resposta.lower() not in alternativas:
-                    os.system('cls')
-                    print('\033[7;49;91m\nDigite uma resposta válida!\033[m')
-                    print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
-                else:
-                    break
-
-            acertos = 0
-            jaforam_perguntas.append(qa)
-                
-            #Verificando se a resposta está correta:
-            alt = ['a', 'b', 'c']
-            for i in range(3):
-                if alt[i] == questoes[qa][4]:
-                    if resposta.upper() == questoes[qa][i+1].upper() or resposta.lower() == alt[i]:
-                        pontos +=1
-                        print(f'\033[3;49;92m\nParabéns, {nome.title()}, você acertou!\nVocê ganhou 1 ponto\nVocê tem {pontos} pontos\n...\033[m')
-                        time.sleep(3)
-                        os.system('cls')
-                        acertos+=1
-
-            # caso a resposta esteja incorreta, a variável "acertos" continuará igual a 0:
-            if acertos == 0:
-                print(f'\033[3;49;91m\nErrou, {nome.title()}:(. Boa sorte na próxima.\n...\033[m')
-                time.sleep(3)
-                os.system('cls')   
-
-            # Imprimindo o "carregamento de dinossauro" e uma curiosidade a cada duas questões:
-            if (quest)%2 == 0:
-                if qc not in jaforam_curiosidades:
-                    jaforam_curiosidades.append(qc)
-                    #for para acessar a "imagem":
-                    for indice_d in range(len(frame_dinossauro)):
-                        #for para imprimir cada linha da "imagem":
-                        for indice_fd in range(len(frame_dinossauro[indice_d])):
-                            print(frame_dinossauro[indice_d][indice_fd])
-                        #Imprimindo a curiosidade:
-                        print(f'\033[3;49;93mVocê sabia?:\n\033[m {curiosidades[qc]}\n')
-                        time.sleep(1.8)
-                        os.system('cls')
+        while len(jaforam_perguntas) < len(questoes):
+            qc = random.randint(0, len(curiosidades)-1)
+            qa = random.randint(0, len(questoes)-1)
             
-            # Imprimindo apenas o "carregamento de dinossauro":
-            else:
-                for indice_d in range(len(frame_dinossauro)):
-                    for indice_fd in range(len(frame_dinossauro[indice_d])):
-                        print(frame_dinossauro[indice_d][indice_fd])
-                    time.sleep(0.5)
-                    os.system('cls')
+            #O if permite que nem as perguntas, nem as curiosidades sejam repetidas.
+            if qa not in jaforam_perguntas and qc not in jaforam_curiosidades:
+                alternativas = []
+                quest +=1
+                print(f'\033[1;7;49;92mQuestão {quest}:\033[m')
+
+                #Obtendo a resposta do usuário de forma que não entre uma resposta inválida:
+                while True:
+                    exibir_quest(questoes, qa)
+                    inicio_resposta = time.time()
+                    resposta = input('> ')
+                    fim_resposta = time.time()
+                    tempo_resposta = fim_resposta - inicio_resposta
+                    '''
+                    tempo_resposta é a subtração do fim_resposta (o momento em que o usuário clicou enter) com o inicio_resposta 
+                    (o momento em que o sistema começa a esperar a resposta do usuário), resultando no tempo que o usuário demorou a responder
+                    '''
+                    if check_quest(alternativas, quest, resposta, qa, tempo_resposta) == False:
+                        break
+                    #O "while" continuará repetindo até check_quest() retornar False, o que significa que a resposta digitada é uma das possíveis.
+
+                jaforam_perguntas.append(qa)
+
+                pontos, quest_certas = pontuar(resposta, tempo_resposta, pontos, questoes, qa, quest_certas)    
+
+                #imprimindo o "carregamento de dinossauro"
+                imprimir_dinossauro(quest, qc)
 
 
     #imprimindo "FIM DE JOGO"
-    print('\033[1;93m:::::::: ::: :::.    .::   ::::::.  :::::::      ::: .:::::. .::::::: .:::::.\033[m')
-    print('\033[1;93m:::          ::: .  . ::   :::   :: :::          ::: :::  :: :::      :::  ::\033[m')
-    print('\033[1;93m:::::::  ::: :::  ::  ::   :::   :: ::::::       ::: :::  :: :::  ::: :::  ::\033[m')
-    print('\033[1;93m:::      ::: :::      ::   :::   :: :::      ::. ::: :::  :: :::   :: :::  ::\033[m')
-    print('\033[1;93m:::      ::: :::      ::   :::...:\' :::::::  \':::::\' \':::::\' \'::::::\' \':::::\'\033[m')
+        print('\033[1;93m:::::::: ::: :::.    .::   ::::::.  :::::::      ::: .:::::. .::::::: .:::::.\033[m')
+        print('\033[1;93m:::          ::: .  . ::   :::   :: :::          ::: :::  :: :::      :::  ::\033[m')
+        print('\033[1;93m:::::::  ::: :::  ::  ::   :::   :: ::::::       ::: :::  :: :::  ::: :::  ::\033[m')
+        print('\033[1;93m:::      ::: :::      ::   :::   :: :::      ::. ::: :::  :: :::   :: :::  ::\033[m')
+        print('\033[1;93m:::      ::: :::      ::   :::...:\' :::::::  \':::::\' \':::::\' \'::::::\' \':::::\'\033[m')
 
-    if pontos == len(questoes):
-        print('\n\nUau! Você é um verdadeiro paleontólogo! \nConseguiu {0}/{0} pontos. ( •̀ ω •́ )✧'.format(len(questoes)))
-    elif pontos >= 6:
-        print(f'\n\nVocê foi bem, conseguiu {pontos}/{len(questoes)} pontos.\nParabéns pelo esforço. :)')
-    else:
-        print(f'\n\nVocê não foi bem: conseguiu {pontos}/{len(questoes)} pontos. \nBoa sorte na próxima. :(')
-    print('\033[5;49;92m{}\033[m'.format(29*'-'))
-    continuar = input('\nVocê deseja jogar novamente?\n>> ')
-    # perguntando se o usuário deseja continuar a jogar, dependendo da resposta a variavel loop assumirá um valor para que o while se encerre
-    if continuar.upper() != 'S' and continuar.upper() != 'SIM':
-        loop = False
-    else:
-        os.system('cls')
+        show_points(pontos, questoes, quest_certas)
+        continuar = input('\nVocê deseja jogar novamente?\n>> ')
+        # perguntando se o usuário deseja continuar a jogar, dependendo da resposta a variavel loop assumirá um valor para que o while se encerre
+        if continuar.upper() != 'S' and continuar.upper() != 'SIM':
+            loop = False
+        else:
+            limpar()
+        return jogar(loop)
+    
+print(jogar(loop))
